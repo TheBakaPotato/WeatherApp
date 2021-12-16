@@ -13,8 +13,11 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+
+import org.json.JSONObject;
 
 public class MainActivity extends AppCompatActivity {
     Button btn_GetCityID, btn_getWeatherByCityID, btn_getWeatherByCityName;
@@ -63,6 +66,27 @@ public class MainActivity extends AppCompatActivity {
         btn_getWeatherByCityID.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                RequestQueue queue = Volley.newRequestQueue(MainActivity.this);
+                String url ="https://www.metaweather.com/api/location/search/?query=london";
+                JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url, null,
+                        new Response.Listener<JSONObject>(){
+                            @Override
+                            public void onResponse(JSONObject response) {
+                                Toast.makeText(MainActivity.this, response.toString(), Toast.LENGTH_SHORT).show();
+                            }
+                }, new Response.ErrorListener() {
+
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Toast.makeText(MainActivity.this, "Conserta essa fita parcero", Toast.LENGTH_SHORT).show();
+
+                    }
+                });
+
+                // Access the RequestQueue through your singleton class.
+                queue.add(jsonObjectRequest);
+
+
                 Toast.makeText(MainActivity.this, "Botão 2", Toast.LENGTH_SHORT).show();
             }
         });
