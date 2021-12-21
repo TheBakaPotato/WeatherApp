@@ -35,44 +35,32 @@ public class MainActivity extends AppCompatActivity {
         btn_getWeatherByCityName = findViewById(R.id.btn_getWeatherByCityName);
         et_DataInput = findViewById(R.id.et_dataInput);
         lv_WeatherReport = findViewById(R.id.lv_weatherReports);
-
+        final WeatherDataService weatherDataService = new WeatherDataService(MainActivity.this);
         btn_GetCityID.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 //RequestQueue queue = Volley.newRequestQueue(MainActivity.this);
-                String cityName = et_DataInput.getText().toString();
-                String url ="https://www.metaweather.com/api/location/search/?query="+cityName;
-                JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Request.Method.GET, url, null,
-                        new Response.Listener<JSONArray>(){
-                            @Override
-                            public void onResponse(JSONArray response) {
-                                Toast.makeText(MainActivity.this, response.toString(), Toast.LENGTH_SHORT).show();
-                                try {
-                                    JSONObject cityInfo = response.getJSONObject(0);
-                                    String cityID = cityInfo.getString("woeid");
-                                    Toast.makeText(MainActivity.this, cityID.toString(), Toast.LENGTH_SHORT).show();
-                                } catch (JSONException e) {
-                                    e.printStackTrace();
-                                }
-                            }
-                        }, new Response.ErrorListener() {
+                weatherDataService.getCityID(et_DataInput.getText().toString(), new WeatherDataService.VolleyCallBack() {
+                    @Override
+                    public void onSuccess(String cityID) {
+                        Toast.makeText(MainActivity.this, "Third toast CityID Test "+cityID, Toast.LENGTH_SHORT).show();
+
+                    }
 
                     @Override
-                    public void onErrorResponse(VolleyError error) {
-                        Toast.makeText(MainActivity.this, "Conserta essa fita parcero", Toast.LENGTH_SHORT).show();
+                    public void onError(String message) {
+                        Toast.makeText(MainActivity.this, message, Toast.LENGTH_SHORT).show();
 
                     }
                 });
-
-                // Access the RequestQueue through your singleton class.
-                MySingleton.getInstance(MainActivity.this).addToRequestQueue(jsonArrayRequest);
 
             }
         });
         btn_getWeatherByCityID.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                RequestQueue queue = Volley.newRequestQueue(MainActivity.this);
+
+                /*RequestQueue queue = Volley.newRequestQueue(MainActivity.this);
                 String url ="https://www.metaweather.com/api/location/search/?query=london";
                 JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Request.Method.GET, url, null,
                         new Response.Listener<JSONArray>(){
@@ -98,7 +86,7 @@ public class MainActivity extends AppCompatActivity {
 
                 // Access the RequestQueue through your singleton class.
                 MySingleton.getInstance(MainActivity.this).addToRequestQueue(jsonArrayRequest);
-                Toast.makeText(MainActivity.this, "Botão 2", Toast.LENGTH_SHORT).show();
+                Toast.makeText(MainActivity.this, "Botão 2", Toast.LENGTH_SHORT).show();*/
             }
         });
         btn_getWeatherByCityName.setOnClickListener(new View.OnClickListener() {
