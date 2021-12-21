@@ -39,30 +39,33 @@ public class MainActivity extends AppCompatActivity {
         btn_GetCityID.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //Toast.makeText(MainActivity.this, "Botão 1", Toast.LENGTH_SHORT).show();
-                // Instantiate the RequestQueue.
                 RequestQueue queue = Volley.newRequestQueue(MainActivity.this);
-                String url ="https://www.metaweather.com/api/location/search/?query=london";
-
-                // Request a string response from the provided URL.
-                StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
-                        new Response.Listener<String>() {
+                String cityName = et_DataInput.getText().toString();
+                String url ="https://www.metaweather.com/api/location/search/?query="+cityName;
+                JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Request.Method.GET, url, null,
+                        new Response.Listener<JSONArray>(){
                             @Override
-                            public void onResponse(String response) {
-                                // Display the first 500 characters of the response string.
-                                Toast.makeText(MainActivity.this, response, Toast.LENGTH_SHORT).show();
-                                //textView.setText("Response is: "+ response.substring(0,500));
+                            public void onResponse(JSONArray response) {
+                                Toast.makeText(MainActivity.this, response.toString(), Toast.LENGTH_SHORT).show();
+                                try {
+                                    JSONObject cityInfo = response.getJSONObject(0);
+                                    String cityID = cityInfo.getString("woeid");
+                                    Toast.makeText(MainActivity.this, cityID.toString(), Toast.LENGTH_SHORT).show();
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                }
                             }
                         }, new Response.ErrorListener() {
+
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        Toast.makeText(MainActivity.this, "Algo deu errado my brodi", Toast.LENGTH_SHORT).show();
-                        //textView.setText("That didn't work!");
+                        Toast.makeText(MainActivity.this, "Conserta essa fita parcero", Toast.LENGTH_SHORT).show();
+
                     }
                 });
 
-                // Add the request to the RequestQueue.
-                queue.add(stringRequest);
+                // Access the RequestQueue through your singleton class.
+                queue.add(jsonArrayRequest);
 
             }
         });
