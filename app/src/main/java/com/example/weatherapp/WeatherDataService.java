@@ -11,6 +11,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class WeatherDataService {
@@ -57,7 +58,7 @@ public class WeatherDataService {
         //return cityID;
     }
     public void getCityForecastByID(String cityID, final VolleyCallBack volleyCallBack ){
-        //List<WeatherReportModel>
+        List<WeatherReportModel> report = new ArrayList<>();
     }
 //    public List<WeatherReportModel> getCityForecastByName(String cityName){
 //
