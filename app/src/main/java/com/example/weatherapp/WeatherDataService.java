@@ -1,7 +1,6 @@
 package com.example.weatherapp;
 
 import android.content.Context;
-import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.Response;
@@ -57,9 +56,8 @@ public class WeatherDataService {
         MySingleton.getInstance(context).addToRequestQueue(jsonArrayRequest);
         //return cityID;
     }
-    public List<WeatherReportModel> getCityForecastByID(String cityID,final VolleyCallBack volleyCallBack ){
-
-        return null;
+    public void getCityForecastByID(String cityID, final VolleyCallBack volleyCallBack ){
+        //List<WeatherReportModel>
     }
 //    public List<WeatherReportModel> getCityForecastByName(String cityName){
 //

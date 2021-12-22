@@ -36,6 +36,7 @@ public class MainActivity extends AppCompatActivity {
         et_DataInput = findViewById(R.id.et_dataInput);
         lv_WeatherReport = findViewById(R.id.lv_weatherReports);
         final WeatherDataService weatherDataService = new WeatherDataService(MainActivity.this);
+
         btn_GetCityID.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
